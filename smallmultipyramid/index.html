@@ -252,13 +252,13 @@ console.log(size)
 
               svg=d3.select('#svg_' + k)
 
-              createLegend();
+              //createLegend();
 
 			var halfWidth =  margin.left + chart_width/2.8 + dvc.essential.margin_centre[size]/2;
 			 //create chart left
 			var svgL = d3.select('#svg_' + k).append('g')
 			 			.attr("width", halfWidth )
-				        .attr("height", height )  // + margin.top + margin.bottom
+				        .attr("height", height  + margin.top + margin.bottom)
 				        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
 					svgL.append("rect")
@@ -390,7 +390,7 @@ console.log(size)
 						d3.selectAll('g.y.axis').selectAll('.tick').select('text').style('text-anchor', 'middle');
             d3.selectAll('g.y.axis').selectAll('.tick').select('text')
               .each(function(d,i){
-                if(i % dvc.optional.y_ticks_sm_md_lg_every_other[size]){
+                if(i % dvc.optional.y_ticks_sm_md_lg_every_other[size]-1){
                   d3.select(this).attr("fill", "none")
                 }
               })
