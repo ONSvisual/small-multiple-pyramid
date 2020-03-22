@@ -8,7 +8,7 @@
 
             "legendLabels" : ["1905","1951", "2018"],
             "legendLabels2" : ["Male","Female"],
-            "colour_palette": ["#053d58", "#053d58", "#24a79b", " #24a79b"],
+            "colour_palette": ["#3a7899", "#3a7899", "#24a79b", " #24a79b"],
             "legendStyle": ["rect", "line"],
             "sourceText":["Office for National Statistics, National Records of Scotland, Northern Ireland Statistics and Research Agency - Population Estimates"],
             "sourceURL":[""],
