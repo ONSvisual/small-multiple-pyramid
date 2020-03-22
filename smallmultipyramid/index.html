@@ -173,7 +173,7 @@ a {
           // console.log(chart_width);
           var height = Math.ceil((chart_width * dvc.optional.aspectRatio_lg[1]) / dvc.optional.aspectRatio_lg[0]) - dvc.optional.innerlg[0] - dvc.optional.innerlg[2];
         }
-console.log(size)
+
 			if (chart_width + margin.left + margin.right > 550) {
         maxWidth = 550;
         chart_width = maxWidth - margin.left - margin.right
@@ -191,7 +191,7 @@ console.log(size)
 
       chartgroups.forEach(function(chartgroup,k) {
 
-        console.log(chartgroups);
+        console.log(size);
 
       graphicfiltered = graphic_data.filter(function(b,i){return b.group == chartgroup})
 
@@ -244,7 +244,7 @@ console.log(size)
         var x_axis_grid = function() { return xAxis; }
 
         var legend = d3.select('#graphic').append('svg')
-                .attr("id", function(){return "svg_" + k})
+                .attr("id", function(){ return "svg_" + k})
         				.attr("width", chart_width + margin.left + margin.right)
         				.attr("height", height + margin.top + margin.bottom)
         				.append("g")
@@ -305,7 +305,7 @@ console.log(size)
 
     //get to the first data value for series 1 and 2, needed for beginning outline drawing
 
-    console.log(graphicfiltered)
+  //  console.log(graphicfiltered)
 		var value1=graphicfiltered[0].MaleLine;
 		var value2=graphicfiltered[0].FemaleLine;
 
@@ -323,7 +323,7 @@ console.log(size)
 					.append('rect')
 					.attr('class', 'barL')
 					.attr("width", function(d) { return Math.abs(x(d[names[0]]) - x(0)); })  // 0 +
-					.attr("x", function(d) {console.log(d[names[0]]);   return x(d[names[0]]); })
+					.attr("x", function(d) {/*onsole.log(d[names[0]])*/  return x(d[names[0]]); })
 					.attr("y", function(d) {
 
             if(d.index-1 >=0){
@@ -336,17 +336,14 @@ console.log(size)
 					.attr("height", y.bandwidth())
           .attr("fill",dvc.essential.colour_palette[0]);
 
-
-
-
 		var svgR = d3.select('#svg_' + k).append('g')
-			 			.attr("width", (margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier) + dvc.essential.margin_centre[size]/2 ) )
+			 			.attr("width", (margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier[size]) + dvc.essential.margin_centre[size]/2 ) )
 				        .attr("height", height )  // + margin.top  + margin.bottom
-				        .attr("transform", "translate(" + ( margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier) + dvc.essential.margin_centre[size] ) + "," + margin.top + ")");
+				        .attr("transform", "translate(" + ( margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier[size]) + dvc.essential.margin_centre[size] ) + "," + margin.top + ")");
 
 					svgR.append("rect")
 						.attr("class","svgRect")
-						.attr("width", chart_width/dvc.essential.r_chart_placement_multiplier)
+						.attr("width", chart_width/dvc.essential.r_chart_placement_multiplier[size])
 						.attr("height", height);
 
 				    svgR.append('g')
@@ -416,6 +413,9 @@ console.log(size)
 					.attr("height", y.bandwidth())
           .attr("fill",dvc.essential.colour_palette[1]);
 
+          svgL.append("text").attr("transform", "translate(20,50)").text(dvc.essential.legendLables2[0])
+          svgR.append("text").attr("transform", "translate(20,50)").text(dvc.essential.legendLables2[1])
+
           //finish the path data for series 2
           //pathData2=pathData2+"L "+x1(0)+" "+height;
 
@@ -429,12 +429,15 @@ console.log(size)
           //     .attr("stroke-width","2px")
           //     .attr("d",pathData2);
 
-d3.select(".y").selectAll(".tick").each(function(d,i){
-  //console.log(d3.select(this).select("text").text(),+"  "+i)
-  label=graphicfiltered[i].age
-//  console.log(label)
-  d3.select(this).select("text").text(label)
-})
+  d3.select('#svg_' + k).select(".y").selectAll(".tick").each(function(d,i){
+    //console.log(d3.select(this).select("text").text(),+"  "+i)
+    label=graphicfiltered[i].age
+    //console.log(label)
+    d3.select(this).select("text").text(label)
+  })
+
+  d3.select('#svg_' + k).append("text").attr("transform", "translate(20,20)").text(function(){return dvc.essential.legendLabels[k]})
+
 
 });
 
@@ -585,7 +588,7 @@ d3.select(".y").selectAll(".tick").each(function(d,i){
               if(i == 0 || i== 2) {
                 return "translate(0, 0) ";
               }	else {
-                return "translate(" + ( margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier) + dvc.essential.margin_centre[size] ) + ", 0) ";
+                return "translate(" + ( margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier[size]) + dvc.essential.margin_centre[size] ) + ", 0) ";
               }
 						});
 
@@ -623,7 +626,7 @@ d3.select(".y").selectAll(".tick").each(function(d,i){
 								.attr("fill", "white")
 								.attr("opacity", 0.8)
 								.attr("transform", function(){ if(i == 0) { return "translate(0, 0) ";	}
-													else { return "translate(" + ( margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier) + dvc.essential.margin_centre[size] ) + ", 0) "; }
+													else { return "translate(" + ( margin.left + (chart_width/dvc.essential.r_chart_placement_multiplier[size]) + dvc.essential.margin_centre[size] ) + ", 0) "; }
 													});;
 
 					}; // end function createBackRect()
