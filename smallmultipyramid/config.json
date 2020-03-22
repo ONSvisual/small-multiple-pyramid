@@ -6,11 +6,11 @@
 
             "numbercolumns_sm_md_lg": [1,3,3],
 
-            "legendLabels" : ["2018","2045", "2090"],
+            "legendLabels" : ["1905","1951", "2018"],
             "legendLabels2" : ["Male","Female"],
             "colour_palette": ["#053d58", "#053d58", "#24a79b", " #24a79b"],
             "legendStyle": ["rect", "line"],
-            "sourceText":["Office for National Statistics – Annual Population Survey"],
+            "sourceText":["Office for National Statistics, National Records of Scotland, Northern Ireland Statistics and Research Agency - Population Estimates"],
             "sourceURL":[""],
 
             "annotationChart": [],
@@ -26,9 +26,9 @@
             "r_chart_placement_multiplier": [2.65, 2.1, 2.4]
     },
     "optional" : {
-            "margin_sm": [20, 0, 15, 20],
-            "margin_md": [20, 0, 15, 20],
-            "margin_lg": [20, 0, 15, 20],
+            "margin_sm": [20, 0, 30, 20],
+            "margin_md": [20, 0, 30, 20],
+            "margin_lg": [20, 0, 30, 20],
 
             "innersm":[50 , 0 , 40 , 30 ],
             "innermd":[50 , 0 , 0 , 30 ],
@@ -41,7 +41,7 @@
             "mobileBreakpoint" : 450,
 
             "x_num_ticks_sm_md_lg" : [2,2,2],
-            "y_ticks_sm_md_lg_every_other" : [10,10,10],
+            "y_ticks_sm_md_lg_every_other" : [10,25,10],
             "centre_line" : false,
             "centre_line_value" : 0
     }

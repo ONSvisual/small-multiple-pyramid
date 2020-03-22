@@ -3,7 +3,7 @@
 
 <head>
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700|Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
-    <title>LGB population pyramid</title>
+    <title>Small multiples population pyramid</title>
 
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -78,6 +78,13 @@ a {
    color:#fff;
 }
 
+axis, text{
+  font-size:11px;
+}
+.year{
+  font-size:12px;
+}
+
     </style>
 </head>
 <body>
@@ -86,7 +93,7 @@ a {
     	<img src="fallback.png" alt="[Chart]" />
     </div>
 
-    <h6 id="source">Source: Office for National Statistics – Annual Population Survey</h6>
+    <h6 id="source">Source: Office for National Statistics, National Records of Scotland, Northern Ireland Statistics and Research Agency - Population Estimates</h6>
        <div id="keypoints">
         <p></p>
       </div>
@@ -112,6 +119,7 @@ a {
     var pymChild = null;
 
 		function drawGraphic(width) {
+      console.log("drawGraphic")
 		   var threshold_md = 550;
 		   var threshold_sm = dvc.optional.mobileBreakpoint;
 
@@ -153,6 +161,7 @@ a {
           var chart_width =  (canvaswidth / dvc.essential.numbercolumns_sm_md_lg[1]) - dvc.optional.innermd[1] - dvc.optional.innermd[3];
           var height = Math.ceil((chart_width * dvc.optional.aspectRatio_md[1]) / dvc.optional.aspectRatio_md[0]) - dvc.optional.innermd[0] - dvc.optional.innermd[2];
         } else {
+
           size = 2;
           nocols = dvc.essential.numbercolumns_sm_md_lg[2];
           var margin = {
@@ -191,7 +200,7 @@ a {
 
       chartgroups.forEach(function(chartgroup,k) {
 
-        console.log(size);
+        console.log("size:"+size);
 
       graphicfiltered = graphic_data.filter(function(b,i){return b.group == chartgroup})
 
@@ -387,10 +396,22 @@ a {
 						d3.selectAll('g.y.axis').selectAll('.tick').select('text').style('text-anchor', 'middle');
             d3.selectAll('g.y.axis').selectAll('.tick').select('text')
               .each(function(d,i){
-                if(i % dvc.optional.y_ticks_sm_md_lg_every_other[size]-1){
+                if(i % dvc.optional.y_ticks_sm_md_lg_every_other[size]){
                   d3.select(this).attr("fill", "none")
+                } else {
+                  d3.select(this).attr("fill", "#a2a2a2")
                 }
               })
+d3.selectAll('g.x.axis').selectAll('.tick').select('text').attr("fill", "#a2a2a2")
+
+              if(parseInt(graphic.style("width")) < 650 && parseInt(graphic.style("width")) > 450){
+                d3.selectAll('g.x.axis').selectAll('.tick').select('text')
+                  .each(function(d,i){
+                    if(i % 2){
+                      d3.select(this).attr("fill", "none")
+                    }
+                })
+              }
 
 			svgR.append('g').attr("class","bars").selectAll('rect')
 					.data(graphicfiltered) //  change this to variable
@@ -413,8 +434,6 @@ a {
 					.attr("height", y.bandwidth())
           .attr("fill",dvc.essential.colour_palette[1]);
 
-          svgL.append("text").attr("transform", "translate(20,50)").text(dvc.essential.legendLables2[0])
-          svgR.append("text").attr("transform", "translate(20,50)").text(dvc.essential.legendLables2[1])
 
           //finish the path data for series 2
           //pathData2=pathData2+"L "+x1(0)+" "+height;
@@ -436,7 +455,10 @@ a {
     d3.select(this).select("text").text(label)
   })
 
-  d3.select('#svg_' + k).append("text").attr("transform", "translate(20,20)").text(function(){return dvc.essential.legendLabels[k]})
+  d3.select('#svg_' + k).append("text").attr("font-weight", "600").attr("class", "year").attr("transform", "translate(10,20)").text(function(){return dvc.essential.legendLabels[k]})
+  d3.select('#svg_' + k).append("text").attr("text-anchor", "middle").attr("fill", "#a2a2a2").attr("transform", "translate("+(chart_width+margin.left)/2+","+(40+height)+")").text("population")
+  d3.select('#svg_' + k).append("text").attr("transform", "translate(15,35)").attr("font-size", "12px").attr("fill", "#a2a2a2").text(dvc.essential.legendLabels2[0])
+  d3.select('#svg_' + k).append("text").attr("transform", "translate("+(chart_width-35)+",35)").attr("font-size", "12px").attr("fill", "#a2a2a2").text(dvc.essential.legendLabels2[1])
 
 
 });
